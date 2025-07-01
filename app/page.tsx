@@ -65,7 +65,7 @@ export default function Home() {
         </div>
       </main>
       <footer className="w-full text-center py-4 text-sm text-gray-500 dark:text-gray-400 bg-transparent select-none">
-        © {new Date().getFullYear()} Code Mentor AI &mdash; Crafted by Your Name
+        © {new Date().getFullYear()} Code Mentor AI &mdash; Crafted by Your Pugazhendhi 
       </footer>
     </>
   )
