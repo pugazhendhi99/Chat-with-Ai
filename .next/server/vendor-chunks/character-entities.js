@@ -11,7 +11,7 @@ exports.id = "vendor-chunks/character-entities";
 exports.ids = ["vendor-chunks/character-entities"];
 exports.modules = {
 
-/***/ "(rsc)/./node_modules/character-entities/index.json":
+/***/ "(ssr)/./node_modules/character-entities/index.json":
 /*!****************************************************!*\
   !*** ./node_modules/character-entities/index.json ***!
   \****************************************************/

@@ -11,7 +11,7 @@ exports.id = "vendor-chunks/character-reference-invalid";
 exports.ids = ["vendor-chunks/character-reference-invalid"];
 exports.modules = {
 
-/***/ "(rsc)/./node_modules/character-reference-invalid/index.json":
+/***/ "(ssr)/./node_modules/character-reference-invalid/index.json":
 /*!*************************************************************!*\
   !*** ./node_modules/character-reference-invalid/index.json ***!
   \*************************************************************/
