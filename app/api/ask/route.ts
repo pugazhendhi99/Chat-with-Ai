@@ -1,16 +1,10 @@
 import { NextRequest } from 'next/server'
-import {GoogleGenAI} from '@google/genai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import formidable from 'formidable'
-import { Readable } from 'stream'
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+export const dynamic = 'force-dynamic'
 
-console.log('OPENAI_API_KEY:', process.env.OPENAI_API_KEY)
-const gemai = new GoogleGenAI({ apiKey: process.env.OPENAI_API_KEY })
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '')
 
 async function parseForm(req: Request) {
   const form = formidable()
@@ -59,19 +53,13 @@ export async function POST(req: NextRequest) {
     }
     prompt += '\nInstructions: Explain what the code does, identify any errors, and suggest improvements or fixes. If the user asks a question, answer it in detail. Be clear and educational.'
 
-    // Call OpenAI
-    const completion = await gemai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: prompt }]
-        }
-      ]
-    })
+    // Call Gemini
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+    const result = await model.generateContent(prompt)
+    const response = await result.response
+    const aiMessage = response.text() || 'No response from AI.'
 
-    const aiMessage = completion.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI.'
-    return Response.json({ message: completion.candidates?.[0]?.content?.parts?.[0]?.text })
+    return Response.json({ message: aiMessage })
   } catch (error: any) {
     console.error('API error:', error)
     return Response.json({ error: 'Failed to process your request.' }, { status: 500 })
