@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import OpenAI from 'openai'
+import {GoogleGenAI} from '@google/genai'
 import formidable from 'formidable'
 import { Readable } from 'stream'
 
@@ -10,7 +10,7 @@ export const config = {
 }
 
 console.log('OPENAI_API_KEY:', process.env.OPENAI_API_KEY)
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const gemai = new GoogleGenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 async function parseForm(req: Request) {
   const form = formidable()
@@ -60,17 +60,18 @@ export async function POST(req: NextRequest) {
     prompt += '\nInstructions: Explain what the code does, identify any errors, and suggest improvements or fixes. If the user asks a question, answer it in detail. Be clear and educational.'
 
     // Call OpenAI
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: 'You are a helpful coding tutor. Explain, debug, and suggest improvements for the provided code or error.' },
-        { role: 'user', content: prompt }
-      ],
-      max_tokens: 800
+    const completion = await gemai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: prompt }]
+        }
+      ]
     })
 
-    const aiMessage = completion.choices[0]?.message?.content || 'No response from AI.'
-    return Response.json({ message: aiMessage })
+    const aiMessage = completion.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI.'
+    return Response.json({ message: completion.candidates?.[0]?.content?.parts?.[0]?.text })
   } catch (error: any) {
     console.error('API error:', error)
     return Response.json({ error: 'Failed to process your request.' }, { status: 500 })
