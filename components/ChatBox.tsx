@@ -58,16 +58,16 @@ export default function ChatBox({ messages, loading }: { messages: Message[]; lo
     const isUser = msg.role === 'user'
     const time = msg.timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     return (
-      <div key={i} className={`mb-4 flex ${isUser ? 'justify-end' : 'justify-start'} transition-all duration-500 animate-fade-in`}> 
+      <div key={i} className={`mb-3 sm:mb-4 flex ${isUser ? 'justify-end' : 'justify-start'} transition-all duration-500 animate-fade-in`}>
         {!isUser && (
-          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200 flex items-center justify-center mr-2 text-blue-700 font-bold text-lg shadow-md transition-all duration-500">🤖</div>
+          <div className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200 flex items-center justify-center mr-2 text-blue-700 font-bold text-base sm:text-lg shadow-md transition-all duration-500">🤖</div>
         )}
-        <div className={`inline-block px-4 py-2 rounded-xl shadow-lg max-w-[80%] transition-all duration-500 ${isUser ? 'bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 text-blue-900' : 'bg-white/90 text-gray-800'}`}> 
+        <div className={`inline-block px-2 py-1 sm:px-4 sm:py-2 rounded-xl shadow-lg max-w-[90vw] sm:max-w-[80%] transition-all duration-500 ${isUser ? 'bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 text-blue-900' : 'bg-white/90 text-gray-800'}`}>
           {parts}
           <div className="text-xs text-gray-400 text-right mt-1 select-none">{time}</div>
         </div>
         {isUser && (
-          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-gray-300 via-gray-200 to-gray-100 flex items-center justify-center ml-2 text-gray-700 font-bold text-lg shadow-md transition-all duration-500">🧑</div>
+          <div className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-gray-300 via-gray-200 to-gray-100 flex items-center justify-center ml-2 text-gray-700 font-bold text-base sm:text-lg shadow-md transition-all duration-500">🧑</div>
         )}
       </div>
     )
