@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <>
-      <main className={`${dark ? 'dark' : ''} w-full max-w-[1200px] mx-auto p-2 sm:p-4 min-h-screen flex flex-col justify-center items-center transition-all duration-700 ease-in-out ${dark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-100'}`}>
+      <main className={`${dark ? 'dark' : ''} w-full  mx-auto p-2 sm:p-4 min-h-screen flex flex-col justify-center items-center transition-all duration-700 ease-in-out ${dark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-100'}`}>
         <div className="w-full">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6 relative">
             <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200 shadow-lg mb-2 sm:mb-0">
@@ -59,7 +59,7 @@ export default function Home() {
             </button>
           </div>
           <div className="rounded-2xl shadow-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-2 sm:p-6 transition-all duration-700 ease-in-out">
-            <ChatBox messages={messages} loading={loading} />
+            <ChatBox messages={messages} loading={loading} clearChat={() => setMessages([])} />
             <CodeInput onSend={handleSend} loading={loading} />
           </div>
         </div>

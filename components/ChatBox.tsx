@@ -1,14 +1,15 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useEffect, useRef, useState } from 'react'
-import { Copy } from '@phosphor-icons/react'
+import { Copy, Trash } from '@phosphor-icons/react'
 
 interface Message {
   role: string
   content: string
+  timestamp?: string
 }
 
-export default function ChatBox({ messages, loading }: { messages: Message[]; loading: boolean }) {
+export default function ChatBox({ messages, loading, clearChat }: { messages: Message[]; loading: boolean; clearChat: () => void }) {
   const bottomRef = useRef<HTMLDivElement>(null)
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null)
 
@@ -16,7 +17,7 @@ export default function ChatBox({ messages, loading }: { messages: Message[]; lo
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
-  function renderMessage(msg: Message & { timestamp?: string }, i: number) {
+  function renderMessage(msg: Message, i: number) {
     const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g
     const parts = []
     let lastIndex = 0
@@ -30,7 +31,7 @@ export default function ChatBox({ messages, loading }: { messages: Message[]; lo
       const code = match[2]
       parts.push(
         <div key={key++} className="relative group">
-          <SyntaxHighlighter language={lang} style={oneDark} customStyle={{ borderRadius: 8, fontSize: 13, boxShadow: '0 2px 8px #0001', margin: '8px 0', transition: 'all 0.3s' }}>
+          <SyntaxHighlighter language={lang} style={oneDark} customStyle={{ borderRadius: 8, fontSize: 13, boxShadow: '0 2px 8px #0001', margin: '8px 0', transition: 'all 0.3s', background: 'inherit' }}>
             {code}
           </SyntaxHighlighter>
           <button
@@ -74,7 +75,15 @@ export default function ChatBox({ messages, loading }: { messages: Message[]; lo
   }
 
   return (
-    <div className="mt-4 p-4 border border-gray-200 rounded-2xl bg-white/70 min-h-[180px] max-h-96 overflow-y-auto shadow-inner transition-all duration-700 scrollbar-hide">
+    <div className="relative mt-4 p-4 border border-gray-200 rounded-2xl bg-white/70 min-h-[70vh] max-h-[90vh] overflow-y-auto shadow-inner transition-all duration-700 scrollbar-hide !scrollbar-none">
+      <button
+        type="button"
+        className="fixed top-4 right-4 z-50 bg-red-100 hover:bg-red-200 text-red-600 rounded-full p-2 shadow transition-all duration-200"
+        onClick={clearChat}
+        title="Clear chat"
+      >
+        <Trash size={18} />
+      </button>
       {messages.map(renderMessage)}
       {loading && (
         <div className="text-center text-blue-500 animate-pulse mt-2">Thinking...</div>
