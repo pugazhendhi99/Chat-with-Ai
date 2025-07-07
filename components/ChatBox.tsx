@@ -74,7 +74,7 @@ export default function ChatBox({ messages, loading }: { messages: Message[]; lo
   }
 
   return (
-    <div className="mt-4 p-4 border border-gray-200 rounded-2xl bg-white/70 min-h-[180px] max-h-96 overflow-y-auto shadow-inner transition-all duration-700">
+    <div className="mt-4 p-4 border border-gray-200 rounded-2xl bg-white/70 min-h-[180px] max-h-96 overflow-y-auto shadow-inner transition-all duration-700 scrollbar-hide">
       {messages.map(renderMessage)}
       {loading && (
         <div className="text-center text-blue-500 animate-pulse mt-2">Thinking...</div>
